@@ -41,17 +41,23 @@ module.exports = function(grunt) {
 			}
 		},
 		copy: {
+			css: {
+				src: 'src/css/*.css',
+			    expand: true,				
+				flatten: true,
+				dest: 'dist/'
+			},
 			libs: {
 				src: ['lib/base64binary.js', 'lib/MIDI.js/*.js'],
 				dest: 'dist/',
 				cwd: './',
 			    expand: true,				
 				flatten: true,
-			    filter: 'isFile',
+			    filter: 'isFile'
 			},
 			soundfonts: {
 				src: 'soundfonts/*',
-				dest: 'dist/',
+				dest: 'dist/'
 			}
 		}
 	});
@@ -61,5 +67,5 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-browserify');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 
-	grunt.registerTask('default', ['clean', 'string-replace:dev', 'browserify', 'copy:libs', 'copy:soundfonts']);
+	grunt.registerTask('default', ['clean', 'string-replace:dev', 'browserify', 'copy:css', 'copy:libs', 'copy:soundfonts']);
 };

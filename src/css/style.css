@@ -1,7 +1,8 @@
 .trigger {
-	display: block;
-	width: 100px;
+	display: inline-block;
+	width: 10px;
+	border: 1px solid black;
 	height: 100px;
-	background: green;
+	background: gray;
 	cursor: pointer;
 }

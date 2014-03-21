@@ -1,56 +1,38 @@
-var $ = require('jQuery');
 var MIDI = window.MIDI;
+var $ = require('jQuery'),
+	Trigger = require('./trigger.js');
 
 var Instrument = function() {
-	var trigger;
+	var trigger,
+		loaded;
 
-	function setupUI() {		 
-		trigger = $('<a>').addClass('trigger');
-		trigger.on('mousedown', function(){
-			playNote(50);
-		});
-		trigger.on('mouseup', function(){
-			muteNote(50);
-		});
-
-		$('body').append(trigger);
+	function init() {
+		drawUI();
 	}
 
-	function playNote(note) {
-		var delay = 0,
-			velocity = 127;
-
-		MIDI.setVolume(0, 127);
-		MIDI.noteOn(0, note, velocity, delay);
-	}
-
-	function muteNote(note) {
-		MIDI.noteOff(0, note, 0);
-	}
-
-	function destroy() {
-		if(trigger) {
-			trigger.remove();
-			trigger = null;
-		}
+	function drawUI() {
+		for (var i = 21; i < 109; i++) {
+			trigger = new Trigger(i);
+			$('body').append(trigger.trigger);			
+		 }; 
 	}
 	
-	function loadSoundfont(soundfont) {		
+	function loadSoundfont(soundfont) {
+		loaded = false;
 		MIDI.loadPlugin({
 			soundfontUrl: "./soundfonts/",
 			instrument: soundfont.id,
 			callback: function(){
-				destroy();
+				if(loaded) {return;}
+				loaded = true;
 				MIDI.programChange(0, soundfont.number);
-				setupUI();
 			}
 		});
 	}
 
 	return {
-		loadSoundfont: loadSoundfont,
-		playNote: playNote,
-		muteNote: muteNote
+		init: init,
+		loadSoundfont: loadSoundfont
 	}
 };
 

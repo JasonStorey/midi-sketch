@@ -3,11 +3,6 @@ var MIDI = window.MIDI;
 var $ = require('jQuery'),
 	Instrument = require('./Instrument.js');
 
-// DO THIS MORE THAN 4 TIMES AND WEBKIT DIES
-// 
-// var ctx = new webkitAudioContext();
-// ctx.createBufferSource();
-
 function displayPicker() {
 	var picker = $('<select>');
 	var option;
@@ -28,5 +23,6 @@ function displayPicker() {
 }
 
 $('document').ready(function(){
+	Instrument.init();
 	displayPicker();
 });

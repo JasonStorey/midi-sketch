@@ -4,7 +4,6 @@ var MIDI = window.MIDI;
 var Instrument = function() {
 
 	function setupUI() {
-
 		var trigger;
 		 
 		trigger = $('<a>').addClass('trigger');
@@ -19,9 +18,9 @@ var Instrument = function() {
 	}
 
 	function playNote(note) {
-		var delay = 0; // play one note every quarter second
-		var velocity = 127; // how hard the note hits
-		// play the note
+		var delay = 0,
+			velocity = 127;
+
 		MIDI.setVolume(0, 127);
 		MIDI.noteOn(0, note, velocity, delay);
 	}
@@ -30,11 +29,14 @@ var Instrument = function() {
 		MIDI.noteOff(0, note, 0);
 	}
 	
-	function loadSoundfont(instrument) {
+	function loadSoundfont(soundfont) {
 		MIDI.loadPlugin({
 			soundfontUrl: "./soundfonts/",
-			instrument: instrument,
-			callback: setupUI
+			instrument: soundfont.id,
+			callback: function(){
+				MIDI.programChange(0, soundfont.number);
+				setupUI();
+			}
 		});
 	}
 

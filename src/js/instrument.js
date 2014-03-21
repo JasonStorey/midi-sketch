@@ -8,8 +8,11 @@ var Instrument = function() {
 		var trigger;
 		 
 		trigger = $('<a>').addClass('trigger');
-		trigger.on('click', function(){
+		trigger.on('mousedown', function(){
 			playNote(50);
+		});
+		trigger.on('mouseup', function(){
+			muteNote(50);
 		});
 
 		$('body').append(trigger);
@@ -21,7 +24,10 @@ var Instrument = function() {
 		// play the note
 		MIDI.setVolume(0, 127);
 		MIDI.noteOn(0, note, velocity, delay);
-		MIDI.noteOff(0, note, delay + 0.75);
+	}
+
+	function muteNote(note) {
+		MIDI.noteOff(0, note, 0);
 	}
 	
 	function loadSoundfont(instrument) {
@@ -33,7 +39,9 @@ var Instrument = function() {
 	}
 
 	return {
-		loadSoundfont: loadSoundfont
+		loadSoundfont: loadSoundfont,
+		playNote: playNote,
+		muteNote: muteNote
 	}
 };
 

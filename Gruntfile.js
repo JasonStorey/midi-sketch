@@ -31,10 +31,6 @@ module.exports = function(grunt) {
 					{
 						pattern: /%%MIDI_JS_LIB%%/g,
 						replacement: './MIDI.js'
-					},
-					{
-						pattern: /%%BASE_64_LIB%%/g,
-						replacement: './base64binary.js'
 					}
 					]
 				}
@@ -48,7 +44,7 @@ module.exports = function(grunt) {
 				dest: 'dist/'
 			},
 			libs: {
-				src: ['lib/base64binary.js', 'lib/MIDI.js/*.js'],
+				src: ['lib/*.js', 'lib/MIDI.js/*.js'],
 				dest: 'dist/',
 				cwd: './',
 			    expand: true,				

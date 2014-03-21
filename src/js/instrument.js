@@ -2,10 +2,9 @@ var $ = require('jQuery');
 var MIDI = window.MIDI;
 
 var Instrument = function() {
+	var trigger;
 
-	function setupUI() {
-		var trigger;
-		 
+	function setupUI() {		 
 		trigger = $('<a>').addClass('trigger');
 		trigger.on('mousedown', function(){
 			playNote(50);
@@ -28,12 +27,20 @@ var Instrument = function() {
 	function muteNote(note) {
 		MIDI.noteOff(0, note, 0);
 	}
+
+	function destroy() {
+		if(trigger) {
+			trigger.remove();
+			trigger = null;
+		}
+	}
 	
-	function loadSoundfont(soundfont) {
+	function loadSoundfont(soundfont) {		
 		MIDI.loadPlugin({
 			soundfontUrl: "./soundfonts/",
 			instrument: soundfont.id,
 			callback: function(){
+				destroy();
 				MIDI.programChange(0, soundfont.number);
 				setupUI();
 			}

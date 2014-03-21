@@ -3,12 +3,17 @@ var MIDI = window.MIDI;
 var $ = require('jQuery'),
 	Instrument = require('./Instrument.js');
 
+// DO THIS MORE THAN 4 TIMES AND WEBKIT DIES
+// 
+// var ctx = new webkitAudioContext();
+// ctx.createBufferSource();
+
 function displayPicker() {
 	var picker = $('<select>');
 	var option;
 
-		for(var id in MIDI.GeneralMIDI.byId) {
-			var soundfont = MIDI.GeneralMIDI.byId[id];
+		for(var id in MIDI.GM.byId) {
+			var soundfont = MIDI.GM.byId[id];
 			option = $('<option>' + soundfont.id + '</option>');
 			option.data('soundfont', soundfont);
 			picker.append(option);
